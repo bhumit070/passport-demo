@@ -9,11 +9,24 @@ const users_schema = new Schema({
 	username: {
 		type: String,
 		required: true,
-		unique: true
+		unique: true,
+		lowercase: true,
+	},
+	email: {
+		type: String,
+		required: true,
+		unique: true,
+		lowercase: true,
+		validate: {
+			validator: function (email) {
+				return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email)
+			}
+		},
+		default: null
 	},
 	password: {
 		type: String,
-		required: true
+		required: false
 	},
 	profile_image: {
 		type: String,
@@ -28,7 +41,7 @@ const users_schema = new Schema({
 })
 
 users_schema.pre('save', async function (next) {
-	this.password = await bcrypt.hashSync(this.password, 10)
+	this.password && (this.password = await bcrypt.hashSync(this.password, 10))
 	return next()
 })
 
