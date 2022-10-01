@@ -1,6 +1,6 @@
 function generate_response({ error, data, message, status }) {
 	return {
-		status: status ? status : error ? 500 : 200,
+		status: error ? error.status || error.statusCode : status ? status : error ? 500 : 200,
 		error: error ? true : false,
 		message: error && !message ? String(error) : message ? message : error ? 'Something went wrong' : 'Success',
 		data: data || []
