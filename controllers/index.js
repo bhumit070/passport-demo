@@ -40,7 +40,17 @@ async function google_login(req, res) {
 	}
 }
 
+async function logout(req, res,) {
+	try {
+		await user_model.updateOne({ _id: req.user._id }, { token: null })
+		return new Response(res).send({ message: 'Logout successful 🎉' })
+	} catch (error) {
+		return new Response(res).send({ error: error, status: 500, message: 'Internal server error.' })
+	}
+}
+
 function dashboard(req, res) {
+	console.log('req.user is ', req.user)
 	return new Response(res).send({
 		message: 'Welcome to dashboard 🎉', data: {
 			user: req.user
@@ -54,6 +64,7 @@ function not_found(req, res, next) {
 
 module.exports = {
 	login,
+	logout,
 	dashboard,
 	not_found,
 	google_login,

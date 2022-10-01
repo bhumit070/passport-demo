@@ -23,10 +23,8 @@ async function validate_local_strategy(username, password, callback) {
 		if (!user) {
 			return callback(response_helpers.generate_response({ error: true, status: 404, message: 'User not found.' }), null)
 		}
-
-		const is_valid = await bcrypt.compareSync(password, user.password)
-
-		if (!is_valid) {
+		const is_valid_password = await bcrypt.compareSync(password, user.password)
+		if (!is_valid_password) {
 			return callback(response_helpers.generate_response({ error: true, status: 400, message: 'Given password is invalid.' }), null)
 		}
 
