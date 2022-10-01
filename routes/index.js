@@ -14,6 +14,12 @@ router.route('/login').post(passport.authenticate(constants.PASSPORT_STRATEGIES.
 router.route('/login/google').get(passport.authenticate(constants.PASSPORT_STRATEGIES.GOOGLE))
 router.route('/login/google/callback').get(passport.authenticate(constants.PASSPORT_STRATEGIES.GOOGLE), controllers.google_login, passport_middlewares.handle_invalid_passport_request)
 
+// facebook login // TODO: getting delays from facebook so skipping it.
+router.route('/login/facebook').get(passport.authenticate(constants.PASSPORT_STRATEGIES.FACEBOOK))
+router.route('/login/facebook/callback').all((req, res) => {
+	console.log('facebook callback')
+	res.send('ok')
+})
 // dashboard
 router.route('/dashboard').get(passport.authenticate(constants.PASSPORT_STRATEGIES.JWT_TOKEN, passport_config.default_config), controllers.dashboard, passport_middlewares.handle_invalid_passport_request)
 

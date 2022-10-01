@@ -1,7 +1,8 @@
 const PASSPORT_STRATEGIES = {
 	LOCAL: 'local',
 	JWT_TOKEN: 'bearer',
-	GOOGLE: 'google'
+	GOOGLE: 'google',
+	FACEBOOK: 'facebook'
 }
 
 const JWT_SECRET = '^7d�.f\x0FJ\x1BPC'
